@@ -5,7 +5,7 @@ require 'functions/general.php';
 require 'functions/users.php';
 
 $errors = array();
-if (empty($_POST) == false) {
+if (empty($_POST) == false){
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 	
@@ -21,16 +21,16 @@ if (empty($_POST) == false) {
 	echo $numrows;
 	
 	
-	if (userExists($username) == false) {
+	if (userExists($username) == false){
 		$errors[] = 'We can\'t find that username.  Please retype.';
 	}
-	else {
+	else{
 		//log the user in
 		$login = login($username, $password);
 		if ($login == false){
 			$errors[] = 'That username/password combination is incorrect.';
 		}
-		else {
+		else{
 			echo 'ok';
 			//set the user session
 			$_SESSION['username'] = $username;
