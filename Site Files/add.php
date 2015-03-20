@@ -31,7 +31,7 @@ include 'includes/header.php';
 					<form class="form-inline" action="addItem.php" method="POST" enctype="multipart/form-data" id="addItem"/>
 						<p><label>Title:  </label><input type="text" name="title"/></p>
 						<p><label>Price:  </label><input type="text" name="price"/></p>
-						<p><label>Short Description: </label>
+						<p><label>Short Description: </label></p>
 						<textarea id="short" class="" cols="30" rows="2" name="short" form="addItem"></textarea></p>
 						<p><label>Detailed Description: </label>
 						<textarea id="detailed" class="" cols="30" rows="2" name="detailed" form="addItem"></textarea></p>
