@@ -29,23 +29,16 @@ include 'includes/header.php';
 			<div class="row">
 				<div class="col-xs-4" style="margin-bottom:10px">
 					<form class="form-inline" action="addItem.php" method="POST" enctype="multipart/form-data" id="addItem"/>
-						<p><label>Title:  </label><input type="text" name="title"/></p>
-						<p><label>Price:  </label><input type="text" name="price"/></p>
-						<p><label>Short Description: </label></p>
-						<textarea id="short" class="" cols="30" rows="2" name="short" form="addItem"></textarea></p>
-						<p><label>Detailed Description: </label>
-						<textarea id="detailed" class="" cols="30" rows="2" name="detailed" form="addItem"></textarea></p>
+						<p><label>Title:</label><br><input type="text" name="title"/></p><br>
+						<p><label>Price:  </label><br><input type="text" name="price"/></p><br>
+						<p><label>Short Description: </label><br>
+						<textarea id="short" class="" cols="40" rows="3" name="short" form="addItem"></textarea></p><br>
+						<p><label>Detailed Description: </label><br>
+						<textarea id="detailed" class="" cols="40" rows="5" name="detailed" form="addItem"></textarea></p><br>
+						<p><label>QR Code Title:</label><br><input type="text" name="qrtitle"/></p>
 						<input class="btn btn-default pull-left navbar-btn" type="file" name="fileToUpload" id="fileToUpload">
 						<input class="btn btn-default pull-left navbar-btn" type="submit" value="Submit">
 					</form>	
-					
-					 <!-- image upload
-					 <form class="form-inline" action="upload.php" method="POST" enctype="multipart/form-data">
-						<label>Image:<label>
-						<input class="btn btn-default pull-left navbar-btn" type="file" name="fileToUpload" id="fileToUpload">	
-						<input class="btn btn-default pull-left navbar-btn" type="submit" value="Upload Image" name="submit">
-					</form>
-					 -->
 				</div>
 				<div class="col-xs-4" style="margin-bottom:10px">
 					

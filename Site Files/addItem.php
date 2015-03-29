@@ -5,6 +5,7 @@
 session_start();
 include 'includes/head.php';
 include 'includes/header.php';
+include 'phpqrcode/qrlib.php';
 ?>
 
 <div id="wrap">
@@ -23,6 +24,7 @@ include 'includes/header.php';
 
 
 	<?php
+	
 	//-------------connect to the database-------------
 	$servername = 'localhost';
 	$user       = 'root';
@@ -30,36 +32,67 @@ include 'includes/header.php';
 	$dbname     = 'qrusers';
 
 	$conn = new mysqli($servername, $user, $password, $dbname) or die("Unable to connect to the database");
+	
+	// error checking for adding the product and for uploading the file.
+	// 1 = ok , 0 = error
+	$uploadOk = 1;
 
-
-	//--------------insert data--------------------
-	$title     = $_POST["title"];
-	$price     = $_POST["price"];
-	$shortDesc = $_POST["short"];
-	$longDesc  = $_POST["detailed"];
-
-	// INSERT INTO products (title, price, shortDesc, longDesc) VALUES ("Product", 5.00, "Product description", "detailed description")"
-	$sql = "INSERT INTO products (title, price, shortDesc, longDesc) 
-			VALUES (" . "\"" . $title . "\", " . $price . ", \"" . $shortDesc . "\", \"" . $longDesc . "\")";
-
+	//--------------retrieve form data--------------------
+	$title      = addslashes($_POST["title"]);
+	$price      = $_POST["price"];
+	$shortDesc  = addslashes($_POST["short"]);
+	$longDesc   = addslashes($_POST["detailed"]);
+	$imageName  = $_FILES["fileToUpload"]["name"];
+	$imagePath  = "uploads/" . $imageName;
+	$QRCodeName = $_POST["qrtitle"];
+	$QRCodePath = "QRuploads/" . $QRCodeName . ".png";
+	
+	
+	// --------------------- Add product to database ------------------
+	// Example of what the below SQL query should look like:
+	// INSERT INTO	products (title, price, shortDesc, longDesc, imagePath, qrCodePath)
+	// VALUES 		("Product title", 5.00, "Product description", "detailed description", "Product image path", "QR code path")
+	$sql = "INSERT INTO	products (title, price, shortDesc, longDesc, imagePath, qrCodePath) 
+			VALUES		(" . "\"" . $title . "\", " . $price . ", \"" . $shortDesc . "\",
+						\"" . $longDesc . "\", \"" . $imagePath . "\", \"" . $QRCodePath . "\")";
+	
 	if (mysqli_query($conn, $sql)){
-		// SQL query executed successfully
+		// SQL query executed successfully.
 		echo "<p>New record created successfully</p>";
-	} else {
-		// SQL query fail
+	} 
+	else {
+		// SQL query fail.
 		echo "<p>Error: " . $sql . "<br>" . mysqli_error($conn) . "</p>";
+		echo "<p>File will not be uploaded.</p>";
+		$uploadOk = 0;
 	}
-	mysqli_close($conn); // close database connection
+	mysqli_close($conn); // close database connection.
+	
+	
+	// -------------------- Generate QR Code -----------------------
+	// Check if a QR code already exist with this title.
+	if (!file_exists($QRCodePath)) {
+		// Check if product was added to the database successfully before
+		// creating a QR code for it.
+		if ($uploadOk == 1) {
+			// generate a QR code for this products.
+			QRcode::png("Testing: URL will be added", $QRCodePath, "H", 4, 4);
+		}
+		else {
+			echo "<p>Cannot create QR code because there was an error adding the product.</p>";
+		}
+	}
+	else {
+		echo "<p>A QR code already exist with the title " . $QRCodeName . "</p>";
+	}
+	
 
-
-
-	//----------------------Upload the image to the uploads folder-------------------------
+	//------------------ Upload the image to the uploads folder ---------------------
 	$target_dir = "uploads/";
 	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-	$uploadOk = 1;
 	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 	
-	// Check if image file is actually an image or fake image
+	// Check if image file is actually an image or fake image.
 	if(isset($_POST["submit"])){
 		$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
 		if($check !== false){
@@ -71,33 +104,34 @@ include 'includes/header.php';
 		}
 	}
 	
-	// Check if file already exists
+	// Check if file already exists.
 	if (file_exists($target_file)){
 		echo "<p>Sorry, file already exists.</p>";
 		$uploadOk = 0;
 	}
 	
-	// Check file size
-	if ($_FILES["fileToUpload"]["size"] > 500000){
-		echo "<p>Sorry, your file is too large.</p>";
+	// Check file size - unit is in bytes (5MB).
+	if ($_FILES["fileToUpload"]["size"] > 5000000){
+		echo "<p>Sorry, your file is above the 5MB limit.</p>";
 		$uploadOk = 0;
 	}
 	
-	// Limit the type of file formats
+	// Limit the type of file formats.
 	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"){
 		echo "<p>Sorry, only JPG, JPEG, and PNG files are allowed.</p>";
 		$uploadOk = 0;
 	}
 	
-	// Check if $uploadOk has been set to 0 by an error
+	// Check if $uploadOk has been set to 0 by an error.
 	if ($uploadOk == 0){
 		echo "<p>Sorry, your file was not uploaded.</p>";
-	// if everything is ok, try to upload file
 	} 
+	// if everything is ok, try to upload file.
 	else{
 		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)){
 			echo "<p>The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.</p>";
-		} else {
+		} 
+		else {
 			echo "<p>Sorry, there was an error uploading your file.</p>";
 		}
 	}
