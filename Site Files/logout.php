@@ -21,6 +21,7 @@ session_destroy();
 				</div>
 				<div class="col-md-12" style="margin-bottom:10px">
 					<a href="loginPage.php" class="btn btn-primary btn-lg btn-block btn-huge">Log In Again</a>
+					<a href="index.php" class="btn btn-primary btn-lg btn-block btn-huge">Home Page</a>
 				</div>
 				
 			</div>	
