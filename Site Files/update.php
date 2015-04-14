@@ -35,7 +35,7 @@ include 'includes/header.php';
 			$conn = new mysqli($servername, $user, $password, $dbname) or die("Unable to connect to the database");
 
 			
-			//-------------------- Update Variables --------------------
+			//-------------------- Populate variables from edit form --------------------
 			$productID  = $_POST['productID'];
 			$title      = $_POST['title'];
 			$price      = $_POST['price'];
@@ -44,28 +44,31 @@ include 'includes/header.php';
 			$imageName  = $_FILES["fileToUpload"]["name"];
 			$qrCodePath = $_POST['qrtitle'];
 			$itemTag	= $_POST['itemTag'];
-			//if a new image was not entered, query for old image path.
-			if ($imageName){
-				//new image selected
-				$newImage = 1;
-				$imagePath = "uploads/" . $imageName;
-				echo "<p>NEWImagePath: " . $imagePath . "</p>";
+			
+			// Retrieve image path in case the same image is used or to delete the
+			// image if a new one is uploaded.
+			$imgQuery = "SELECT imagePath
+						 FROM	products
+						 WHERE	title = '" . $title . "'";
+			if ($imgResults = mysqli_query($conn, $imgQuery)){
+				$imagePath  = $imgResults->fetch_assoc();
+				$imagePath  = $imagePath['imagePath'];
 			}
 			else {
-				//no new image, query for old imagePath
+				// ImagePath query failed.
+				echo "<p>ERROR: SQL query for the imagePath failed.</p>";
+			}
+			
+			// Check if a new image was selected.
+			if ($imageName){
+				// New image selected, delete the old one first.
+				unlink($imagePath);
+				$newImage = 1;
+				$imagePath = "uploads/" . $imageName;
+			}
+			else {
+				// Using the same image.
 				$newImage = 0;
-				$imgQuery = "SELECT imagePath
-							 FROM	products
-							 WHERE	title = '" . $title . "'";
-				if ($imgResults = mysqli_query($conn, $imgQuery)){
-					$imagePath  = $imgResults->fetch_assoc();
-					$imagePath  = $imagePath['imagePath'];
-					echo "<p>OLDImagePath: " . $imagePath . "</p>";
-				}
-				else {
-					//imagePath query failed
-					echo "<p>ERROR: SQL query for the imagePath failed.</p>";
-				}
 			}
 			
 			
@@ -84,40 +87,41 @@ include 'includes/header.php';
 						echo "<p>File is an image - " . $check["mime"] . ".</p>";
 						$uploadOk = 1;
 					} else {
-						echo "<p>File is not an image.</p>";
+						echo "<p>Error: File is not an image.</p>";
 						$uploadOk = 0;
 					}
 				}
 				
 				// Check if file already exists.
 				if (file_exists($target_file)){
-					echo "<p>Sorry, file already exists.</p>";
+					echo "<p>Error: File already exists.</p>";
 					$uploadOk = 0;
 				}
 				
 				// Check file size - unit is in bytes (5MB).
 				if ($_FILES["fileToUpload"]["size"] > 5000000){
-					echo "<p>Sorry, your file is above the 5MB limit.</p>";
+					echo "<p>Error: Your file is above the 5MB limit.</p>";
 					$uploadOk = 0;
 				}
 				
 				// Limit the type of file formats.
 				if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"){
-					echo "<p>Sorry, only JPG, JPEG, and PNG files are allowed.</p>";
+					echo "<p>Error: Only JPG, JPEG, and PNG files are allowed.</p>";
 					$uploadOk = 0;
 				}
 				
 				// Check if $uploadOk has been set to 0 by an error.
 				if ($uploadOk == 0){
-					echo "<p>Sorry, your file was not uploaded.</p>";
+					echo "<p>Your file was not uploaded.</p>";
 				} 
-				// if everything is ok, try to upload file.
+				// If everything is ok, try to upload file.
 				else {
 					if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)){
-						echo "<p>The file " . basename( $_FILES["fileToUpload"]["name"]) . " has been uploaded.</p>";
+						// No need to tell the user this succeeded, only if it failed.
+						//echo "<p>The file " . basename( $_FILES["fileToUpload"]["name"]) . " has been uploaded.</p>";
 					} 
 					else {
-						echo "<p>Sorry, there was an error uploading your file.</p>";
+						echo "<p>ERROR: There was an error uploading your file.</p>";
 					}
 				}
 			}

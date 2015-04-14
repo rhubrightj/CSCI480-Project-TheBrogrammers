@@ -141,7 +141,7 @@ include 'includes/phpqrcode/qrlib.php';
 		if ($uploadOk == 0){
 			echo "<p>Your file was not uploaded.</p>";
 		} 
-		// if everything is ok, try to upload file.
+		// If everything is ok, try to upload file.
 		else{
 			if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)){
 				// No need to tell the user this succeeded, only if it failed.
