@@ -1,0 +1,26 @@
+Dreamhost login
+
+log-in: rhubrightj
+password:  QRcodes21
+
+
+server info (for winscp):
+webspace user name: jasrhu
+FTP servername: stutter.dreamhost.com
+Password: QRcodes21
+
+database info:
+
+$servername = 'mysql.objectsofdesirefindlay.com';
+$user       = 'jasrhu';
+$password   = 'QRcodes21';
+$dbname     = 'qrusers';
+
+
+
+http://www.objectsofdesirefindlay.com/
+login: admin	
+pw: QRcodes21
+
+
+
