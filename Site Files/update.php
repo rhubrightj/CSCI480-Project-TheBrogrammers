@@ -22,7 +22,7 @@ include 'includes/header.php';
 	<div id="main">
 		<div class="container">
 			
-			<center><h2>Add Item</h2></center>
+			<center><h2>Edit Item</h2></center>
 			
 			<!-- product info form -->
 			<div class="row">

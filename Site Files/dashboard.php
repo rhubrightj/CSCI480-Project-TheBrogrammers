@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <?php 
 session_start();
 include 'includes/head.php';
 include 'includes/header.php';
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
 
 <div id="wrap">
 
@@ -31,17 +31,17 @@ include 'includes/header.php';
 	<div id="main">
 		<div class="container">
 
-			<h4>Dashboard</h4>
+			<center><h4>Dashboard</h4></center>
 
 			<div class="row">
-				<div class="col-md-12" style="margin-bottom:10px">
+				<div class="col-md-4 col-md-offset-4" style="margin-bottom:10px">
 					<a href="add.php" class="btn btn-primary btn-lg btn-block btn-huge">Add Item</a>
 				</div>
-				<div class="col-md-12" style="margin-bottom:10px">
-					<a href="#" class="btn btn-primary btn-lg btn-block btn-huge">Remove Item</a>
+				<div class="col-md-4 col-md-offset-4" style="margin-bottom:10px">
+					<a href="remove.php" class="btn btn-primary btn-lg btn-block btn-huge">Remove Item</a>
 				</div>
-				<div class="col-md-12" style="margin-bottom:10px">
-					<a href="#" class="btn btn-primary btn-lg btn-block btn-huge">Edit Item</a>
+				<div class="col-md-4 col-md-offset-4" style="margin-bottom:10px">
+					<a href="update.php" class="btn btn-primary btn-lg btn-block btn-huge">Edit Item</a>
 				</div>
 			</div>	
 		</div>

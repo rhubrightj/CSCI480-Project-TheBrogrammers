@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <?php 
 session_start();
 include 'includes/head.php';
 include 'includes/header.php';
-include 'phpqrcode/qrlib.php';
+include 'includes/phpqrcode/qrlib.php';
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
 
 <div id="wrap">
 	<!-- header logo and buttons -->
@@ -22,18 +22,17 @@ include 'phpqrcode/qrlib.php';
 		</div>
 	</nav>
 
-
 	<?php
 	
 	//-------------connect to the database-------------
-	$servername = 'localhost';
-	$user       = 'root';
-	$password   = '';
-	$dbname     = 'qrusers';
+	$servername = 'mysql.objectsofdesirefindlay.com';
+	$user       = 'jasrhu2';
+	$password   = 'QRcodes21';
+	$dbname     = 'qrusers';;
 
 	$conn = new mysqli($servername, $user, $password, $dbname) or die("Unable to connect to the database");
 	
-	// error checking for adding the product and for uploading the file.
+	// error checking for adding the product and for uploading the file..
 	// 1 = ok , 0 = error
 	$uploadOk = 1;
 
@@ -45,7 +44,7 @@ include 'phpqrcode/qrlib.php';
 	$imageName  = $_FILES["fileToUpload"]["name"];
 	$imagePath  = "uploads/" . $imageName;
 	$QRCodeName = $_POST["qrtitle"];
-	$QRCodePath = "QRuploads/" . $QRCodeName . ".png";
+	$QRCodePath = "qruploads/" . $QRCodeName . ".png";
 	
 	
 	// --------------------- Add product to database ------------------
@@ -76,7 +75,7 @@ include 'phpqrcode/qrlib.php';
 		// creating a QR code for it.
 		if ($uploadOk == 1) {
 			// generate a QR code for this products.
-			QRcode::png("Testing: URL will be added", $QRCodePath, "H", 4, 4);
+			QRcode::png("http://www.objectsofdesirefindlay.com", $QRCodePath, "H", 4, 4);
 		}
 		else {
 			echo "<p>Cannot create QR code because there was an error adding the product.</p>";

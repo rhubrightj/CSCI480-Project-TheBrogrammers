@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php 
 session_start();
 include 'includes/head.php';
@@ -7,7 +5,10 @@ include 'includes/header.php';
 
 session_destroy();
 ?>
-   
+
+<!DOCTYPE html>
+<html lang="en"> 
+ 
 <div id="wrap">
 	<div id="main">
 		<div class="container">

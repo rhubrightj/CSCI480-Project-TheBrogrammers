@@ -1,12 +1,12 @@
 <?php
-	//-------------connect to the database-------------
-	$servername = 'localhost';
-	$user       = 'root';
-	$password   = '';
-	$dbname     = 'qrusers';
+session_start();
+//-------------connect to the database-------------
+$servername = 'mysql.objectsofdesirefindlay.com';
+$user       = 'jasrhu2';
+$password   = 'QRcodes21';
+$dbname     = 'qrusers';
 
-	$conn = new mysqli($servername, $user, $password, $dbname) or die("Unable to connect to the database");
-	
+$conn = new mysqli($servername, $user, $password, $dbname) or die("Unable to connect to the database");
 
 $page 		=	isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $perPage	= 	isset($_GET['per-page']) && $_GET['per-page'] <= 100 ? (int)$_GET['per-page'] : 10;
@@ -49,7 +49,6 @@ else{
 <!DOCTYPE html>
 <html lang="en">
 <?php 
-session_start();
 include 'includes/head.php';
 include 'includes/header.php';
 ?>
@@ -79,9 +78,9 @@ include 'includes/header.php';
 					
 				<?php foreach($result as $results): ?>
 				<div class="result">
-				
-				<p><?php echo '<a href="./removeItem.php " >' .$results['productID']. ":"  .$results['title'].  '</a>' ;?> </p>
-				
+				<form class="form-inline" action="removeItem.php" method="GET" enctype="multipart/form-data" id="removeItem"/>
+				<p><?php echo "<a href=" . /removeItem.php?productID=$results['productID'] . " >" . $results['productID'] . ":"  .$results['title'].  '</a>' ;?> </p>
+				</form>
 				</div>
 				<?php endforeach; ?>
 				

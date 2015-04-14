@@ -13,12 +13,11 @@ if (empty($_POST) == false){
 		$errors[] = 'You need to enter a username and password';
 	} 
 	
-	mysql_connect('localhost', 'root', '') or die('could not connect');
+	mysql_connect('mysql.objectsofdesirefindlay.com', 'jasrhu2', 'QRcodes21') or die('could not connect');
     mysql_select_db('qrusers') or die('could not find db');
 	$username = sanitize($username);
-	$query = mysql_query("SELECT * FROM users WHERE username = '$username'");
+	$query = mysql_query("SELECT * FROM adminusers WHERE username = '$username'");
 	$numrows = mysql_num_rows($query);
-	echo $numrows;
 	
 	
 	if (userExists($username) == false){
@@ -31,7 +30,6 @@ if (empty($_POST) == false){
 			$errors[] = 'That username/password combination is incorrect.';
 		}
 		else{
-			echo 'ok';
 			//set the user session
 			$_SESSION['username'] = $username;
 			//redirect to dashboard

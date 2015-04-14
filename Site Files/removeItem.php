@@ -1,12 +1,11 @@
-
-<!DOCTYPE html>
-<html lang="en">
-
 <?php 
 session_start();
 include 'includes/head.php';
 include 'includes/header.php';
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
 
 <div id="wrap">
 	<!-- header logo and buttons -->
@@ -32,18 +31,20 @@ include 'includes/header.php';
 	<div class="col-xs-4" style="margin-bottom:10px">	
 <?php
 	//-------------connect to the database-------------
-	$servername = 'localhost';
-	$user       = 'root';
-	$password   = '';
-	$dbname     = 'qrusers';
+	$servername = 'mysql.objectsofdesirefindlay.com';
+	$user       = 'jasrhu2';
+	$password   = 'QRcodes21';
+	$dbname     = 'qrusers';;
 
 	$conn = new mysqli($servername, $user, $password, $dbname) or die("Unable to connect to the database");
 
-
-$sql	= '
-			SELECT  title, price, shortDesc, longDesc 
+	$productID = $_GET["productID"];
+	echo  "<br>" . $productID . "<br>";
+	
+	$sql	= '
+			SELECT  title, price, shortDesc, longDesc, imagePath 
 			FROM	products	
-			WHERE	productID = productID'
+			WHERE	productID = ' .$_GET['productID']. '  '
 	;
 	
 	
@@ -54,8 +55,13 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-         echo " Title: " . $row["title"]."<br>",  " Price: " . $row["price"]."<br>",  " Description: " . $row["shortDesc"]. "<br>", "Long Description" . $row["longDesc"]. "<br>";
-	 echo "<br>";
+		echo "<img class=\"img-responsive\" alt=\"Brand\" src=\"" . $row["imagePath"] . "\" width=\"100px\"> ";
+		echo "<br>";
+        echo " Title: " . $row["title"] . "<br>",  " Price: " . $row["price"] . "<br>",  " Description: " . $row["shortDesc"] . "<br>", "Long Description: " . $row["longDesc"] . "<br>", "Image: " . $row["imagePath"];
+		echo "<a class='btn btn-small btn-danger' data-toggle='dropdown' href='#'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
+		echo "<br>";
+		echo "--------------------------------------------------------------";
+		echo "<br>";
    }
 	
 } else {
@@ -67,9 +73,6 @@ if ($result->num_rows > 0) {
 
 ?>
 					</div>
-				<div class="col-xs-4" style="margin-bottom:10px">
-					
-				</div>
 			</div>	
 		</div>
 	</div>
