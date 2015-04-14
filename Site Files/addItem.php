@@ -36,7 +36,7 @@ include 'includes/phpqrcode/qrlib.php';
 	// 1 = ok , 0 = error
 	$uploadOk = 1;
 
-	//--------------retrieve form data--------------------
+	//--------------retrieve add form data--------------------
 	$title      = addslashes($_POST["title"]);
 	$price      = $_POST["price"];
 	$shortDesc  = addslashes($_POST["short"]);
@@ -45,15 +45,16 @@ include 'includes/phpqrcode/qrlib.php';
 	$imagePath  = "uploads/" . $imageName;
 	$QRCodeName = $_POST["qrtitle"];
 	$QRCodePath = "qruploads/" . $QRCodeName . ".png";
+	$itemTag	= addslashes($_POST["itemTag"]);
 	
 	
 	// --------------------- Add product to database ------------------
 	// Example of what the below SQL query should look like:
 	// INSERT INTO	products (title, price, shortDesc, longDesc, imagePath, qrCodePath)
-	// VALUES 		("Product title", 5.00, "Product description", "detailed description", "Product image path", "QR code path")
-	$sql = "INSERT INTO	products (title, price, shortDesc, longDesc, imagePath, qrCodePath) 
+	// VALUES 		("Product title", 5.00, "Product description", "detailed description", "Product image path", "QR code path", "itemTag")
+	$sql = "INSERT INTO	products (title, price, shortDesc, longDesc, imagePath, qrCodePath, itemTag) 
 			VALUES		(" . "\"" . $title . "\", " . $price . ", \"" . $shortDesc . "\",
-						\"" . $longDesc . "\", \"" . $imagePath . "\", \"" . $QRCodePath . "\")";
+						\"" . $longDesc . "\", \"" . $imagePath . "\", \"" . $QRCodePath . "\", \"" . $itemTag . "\")";
 	
 	if (mysqli_query($conn, $sql)){
 		// SQL query executed successfully.
@@ -65,7 +66,16 @@ include 'includes/phpqrcode/qrlib.php';
 		echo "<p>File will not be uploaded.</p>";
 		$uploadOk = 0;
 	}
-	mysqli_close($conn); // close database connection.
+
+	// Retrieve the productID for the newly entered item.
+	// This will be use to generate a correct URL for this item.
+	$sql = "SELECT  productID
+			FROM	products	
+			WHERE	title = \"" . $title . "\""
+	;
+	$results = mysqli_query($conn, $sql);
+	$productID = $results->fetch_assoc();
+	$productID = $productID['productID'];
 	
 	
 	// -------------------- Generate QR Code -----------------------
@@ -75,7 +85,9 @@ include 'includes/phpqrcode/qrlib.php';
 		// creating a QR code for it.
 		if ($uploadOk == 1) {
 			// generate a QR code for this products.
+			//QRcode::png("http://www.objectsofdesirefindlay.com/get.php?productID=" . $productID, $QRCodePath, "H", 4, 4);
 			QRcode::png("http://www.objectsofdesirefindlay.com", $QRCodePath, "H", 4, 4);
+			echo "<p><img class='img-responsive' alt='Brand' src='$QRCodePath' width='100px'></p>";
 		}
 		else {
 			echo "<p>Cannot create QR code because there was an error adding the product.</p>";
@@ -85,53 +97,59 @@ include 'includes/phpqrcode/qrlib.php';
 		echo "<p>A QR code already exist with the title " . $QRCodeName . "</p>";
 	}
 	
-
-	//------------------ Upload the image to the uploads folder ---------------------
-	$target_dir = "uploads/";
-	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+	mysqli_close($conn); // close database connection.
 	
-	// Check if image file is actually an image or fake image.
-	if(isset($_POST["submit"])){
-		$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-		if($check !== false){
-			echo "<p>File is an image - " . $check["mime"] . ".</p>";
-			$uploadOk = 1;
-		} else {
-			echo "<p>File is not an image.</p>";
+	
+	//--------------------- Upload the image to the uploads folder ---------------------------
+	// if no image is select then do not attempt to upload.
+	if ($imageName){
+		$target_dir = "uploads/";
+		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+		$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+		
+		// Check if image file is actually an image or fake image.
+		if(isset($_POST["submit"])){
+			$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+			if($check !== false){
+				echo "<p>File is an image - " . $check["mime"] . ".</p>";
+				$uploadOk = 1;
+			} else {
+				echo "<p>Error: File is not an image.</p>";
+				$uploadOk = 0;
+			}
+		}
+		
+		// Check if file already exists.
+		if (file_exists($target_file)){
+			echo "<p>Error: File already exists.</p>";
 			$uploadOk = 0;
 		}
-	}
-	
-	// Check if file already exists.
-	if (file_exists($target_file)){
-		echo "<p>Sorry, file already exists.</p>";
-		$uploadOk = 0;
-	}
-	
-	// Check file size - unit is in bytes (5MB).
-	if ($_FILES["fileToUpload"]["size"] > 5000000){
-		echo "<p>Sorry, your file is above the 5MB limit.</p>";
-		$uploadOk = 0;
-	}
-	
-	// Limit the type of file formats.
-	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"){
-		echo "<p>Sorry, only JPG, JPEG, and PNG files are allowed.</p>";
-		$uploadOk = 0;
-	}
-	
-	// Check if $uploadOk has been set to 0 by an error.
-	if ($uploadOk == 0){
-		echo "<p>Sorry, your file was not uploaded.</p>";
-	} 
-	// if everything is ok, try to upload file.
-	else{
-		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)){
-			echo "<p>The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.</p>";
+		
+		// Check file size - unit is in bytes (5MB).
+		if ($_FILES["fileToUpload"]["size"] > 5000000){
+			echo "<p>Error: Your file is above the 5MB limit.</p>";
+			$uploadOk = 0;
+		}
+		
+		// Limit the type of file formats.
+		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"){
+			echo "<p>Error: Only JPG, JPEG, and PNG files are allowed.</p>";
+			$uploadOk = 0;
+		}
+		
+		// Check if $uploadOk has been set to 0 by an error.
+		if ($uploadOk == 0){
+			echo "<p>Your file was not uploaded.</p>";
 		} 
-		else {
-			echo "<p>Sorry, there was an error uploading your file.</p>";
+		// if everything is ok, try to upload file.
+		else{
+			if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)){
+				// No need to tell the user this succeeded, only if it failed.
+				//echo "<p>The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.</p>";
+			} 
+			else {
+				echo "<p>ERROR: There was an error uploading your file.</p>";
+			}
 		}
 	}
 	?>

@@ -18,12 +18,12 @@ include 'includes/header.php';
 				</a>
 			</div>
 			<a class="btn btn-default pull-right navbar-btn" href="./logout.php">Log Out</a>
-					<?php
-						if ($_SESSION['username'])
-							echo "<p class='navbar-text'>Welcome, " .$_SESSION['username']. "!</p>";
-						else
-							die ("You must be logged in!");
-					?>
+			<?php
+				if ($_SESSION['username'])
+					echo "<p class='navbar-text'>Welcome, " .$_SESSION['username']. "!</p>";
+				else
+					die ("You must be logged in!");
+			?>
 		</div>
 	</nav>
 	
@@ -49,7 +49,3 @@ include 'includes/header.php';
 </div>
 
 <?php include 'includes/footer.php';?>
-
-
-
-

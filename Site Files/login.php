@@ -21,13 +21,30 @@ if (empty($_POST) == false){
 	
 	
 	if (userExists($username) == false){
-		$errors[] = 'We can\'t find that username.  Please retype.';
+		//$errors[] = 'We can\'t find that username.  Please retype.';
+			
+			header('refresh: 0; URL = loginPage.php');
+			
+			//script that displays error message with wrong credentials
+			echo '<script language="javascript">';
+			echo 'alert("That username does not exist")';
+			echo '</script>';
+			
 	}
 	else{
 		//log the user in
 		$login = login($username, $password);
 		if ($login == false){
 			$errors[] = 'That username/password combination is incorrect.';
+			//redirects the user back to login page
+			header('refresh: 0; URL = loginPage.php');
+			
+			//script that displays error message with wrong credentials
+			echo '<script language="javascript">';
+			echo 'alert("That username/password combination is incorrect.")';
+			echo '</script>';
+			
+			
 		}
 		else{
 			//set the user session
@@ -36,6 +53,11 @@ if (empty($_POST) == false){
 			header('Location: ./dashboard.php');
 		}
 	}
-	print_r($errors);
+	//print_r($errors);
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+	<div>
+		<a class="btn btn-default pull-left navbar-btn" href="index.php">Return to login</a>
+	</div>

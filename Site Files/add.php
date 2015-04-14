@@ -5,6 +5,7 @@ include 'includes/header.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <div id="wrap">
 	<!-- header logo and buttons -->
 	<nav class="navbar navbar-default">
@@ -49,6 +50,9 @@ include 'includes/header.php';
 							<input style="margin:20px; margin-left:0px" type="file" name="fileToUpload" id="fileToUpload">
 						</div>
 						<div class="form-group">
+							<label for="itemTag">Tag Name:</label><input class="form-control" type="text" id="itemTag" name="itemTag"/>
+						</div>
+						<div class="form-group">
 							<input class="btn btn-info pull-left" type="submit" value="Submit">
 						</div>
 					</form>	
@@ -59,7 +63,3 @@ include 'includes/header.php';
 </div>
 
 <?php include 'includes/footer.php';?>
-
-
-
-

@@ -1,5 +1,4 @@
 <?php
-session_start();
 //-------------connect to the database-------------
 $servername = 'mysql.objectsofdesirefindlay.com';
 $user       = 'jasrhu2';
@@ -15,34 +14,16 @@ $perPage	= 	isset($_GET['per-page']) && $_GET['per-page'] <= 100 ? (int)$_GET['p
 //Positioning
 $start = ($page > 1) ? ($page * $perPage) - $perPage : 0;
 
+$itemTag = $_GET['rel'];
+
 //Query
-$sql = "SELECT  SQL_CALC_FOUND_ROWS productID, title 
+$sql = 'SELECT  productID, title, itemTag
 		FROM	products	
-		LIMIT	{$start}, {$perPage}";
+		WHERE	itemTag = ' . $_GET['rel'] . ' ';
 
 $result = $conn->query($sql);
-//$pages = ceil($result/$perPage);
-/*if($result->num_rows > 0){
-$result->fetch_assoc();
-}
-else{
-	echo "0 results";
-}*/
-
-//This displays the title, price, and description
-/*if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-         echo " Title: " . $row["title"]."<br>",  " Price: " . $row["price"]."<br>",  " Description: " . $row["shortDesc"]. "<br>", "Long Description" . $row["longDesc"]. "<br>";
-		 echo "<br>";
-   }
-	
-} else {
-    echo "0 results";
-}
-*/
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -60,15 +41,15 @@ include 'includes/header.php';
 					<img class="img-responsive" alt="Brand" src="./images/logo.jpg" width="100px">
 				</a>
 			</div>
-			<a class="btn btn-default pull-left navbar-btn" href="./dashboard.php">Dashboard</a>
-			<a class="btn btn-default pull-right navbar-btn" href="./logout.php">Log Out</a>
+			<a class="btn btn-default pull-left navbar-btn" href="./new_index.php">Home</a>
+			<!-- button position -->
 		</div>
 	</nav>
 	
 	<div id="main">
 		<div class="container">
 			
-			<h2>Remove Item</h2>
+			<h2>Related Items</h2>
 			
 			<!-- product info form -->
 			<div class="row">
@@ -76,14 +57,13 @@ include 'includes/header.php';
 					
 					<?php foreach($result as $results): ?>
 					<div class="result">
-						<form class="form-inline" action="removeItem.php" method="GET" enctype="multipart/form-data" id="removeItem"/>
+						<form class="form-inline" action="displayItem.php" method="GET" enctype="multipart/form-data" id="displayItem"/>
 							<div class="table-responsive">
 								<?php 
 				
 								echo '<table class="table table-striped">';
 								echo '<tr>';
-								echo "<td><a href=/removeItem.php?productID=" . $results['productID'] . '>' . $results['productID'] . ": "  . $results['title'] .  "</a></td>";
-								echo"<td><a class='btn btn-small btn-danger pull-right' href='delete.php?del=$results[productID]'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>";
+								echo "<td><a href=/displayItem.php?rel=" . $results['itemTag'] . '>' . $results['productID'] . ":" . $results['title'] .  "</a></td>";
 								echo '</tr>';
 								
 								echo '</table>';
@@ -100,5 +80,4 @@ include 'includes/header.php';
 		</div>
 	</div>
 </div>
-
 <?php include 'includes/footer.php';?>
