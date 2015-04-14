@@ -85,8 +85,7 @@ include 'includes/phpqrcode/qrlib.php';
 		// creating a QR code for it.
 		if ($uploadOk == 1) {
 			// generate a QR code for this products.
-			//QRcode::png("http://www.objectsofdesirefindlay.com/get.php?productID=" . $productID, $QRCodePath, "H", 4, 4);
-			QRcode::png("http://www.objectsofdesirefindlay.com", $QRCodePath, "H", 4, 4);
+			QRcode::png("http://www.objectsofdesirefindlay.com/displayItem.php?productID=" . $productID, $QRCodePath, "H", 4, 4);
 			echo "<p><img class='img-responsive' alt='Brand' src='$QRCodePath' width='100px'></p>";
 		}
 		else {

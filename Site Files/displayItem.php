@@ -15,7 +15,7 @@ include 'includes/header.php';
 					<img class="img-responsive" alt="Brand" src="./images/logo.jpg" width="100px">
 				</a>
 			</div>
-			<!-- button?????? back ect -->
+			<a class="btn btn-default pull-right navbar-btn" href="./index.php">View All Items</a>
 		</div>
 	</nav>
 	<div id="main">
