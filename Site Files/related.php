@@ -14,14 +14,28 @@ $perPage	= 	isset($_GET['per-page']) && $_GET['per-page'] <= 100 ? (int)$_GET['p
 //Positioning
 $start = ($page > 1) ? ($page * $perPage) - $perPage : 0;
 
-$itemTag = $_GET['rel'];
+$itemTag   = $_GET['rel'];
+$productID = $_GET['productID'];
 
+
+
+if($_GET['rel'] == ""){
+	$result = "Sorry there are no related items for this product, please select another product!";
+	
+		
+}
+else{
 //Query
-$sql = 'SELECT  productID, title, itemTag
+$sql = 'SELECT  *
 		FROM	products	
 		WHERE	itemTag = ' . $_GET['rel'] . ' ';
 
-$result = $conn->query($sql);
+$result = mysqli_query($conn, $sql);
+}
+
+
+
+
 ?>
 
 
@@ -41,7 +55,7 @@ include 'includes/header.php';
 					<img class="img-responsive" alt="Brand" src="./images/logo.jpg" width="100px">
 				</a>
 			</div>
-			<a class="btn btn-default pull-left navbar-btn" href="./new_index.php">Home</a>
+			<a class="btn btn-default pull-left navbar-btn" href="./index.php">Home</a>
 			<!-- button position -->
 		</div>
 	</nav>
@@ -63,7 +77,7 @@ include 'includes/header.php';
 				
 								echo '<table class="table table-striped">';
 								echo '<tr>';
-								echo "<td><a href=/displayItem.php?rel=" . $results['itemTag'] . '>' . $results['productID'] . ":" . $results['title'] .  "</a></td>";
+								echo "<td><a href=/displayItem.php?productID=" . $results['productID'] . '>' . $results['productID'] . ": "  . $results['title'] .  "</a></td>";
 								echo '</tr>';
 								
 								echo '</table>';

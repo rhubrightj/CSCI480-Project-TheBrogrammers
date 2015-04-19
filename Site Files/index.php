@@ -15,11 +15,17 @@ $perPage	= 	isset($_GET['per-page']) && $_GET['per-page'] <= 100 ? (int)$_GET['p
 $start = ($page > 1) ? ($page * $perPage) - $perPage : 0;
 
 //Query
-$sql = "SELECT  SQL_CALC_FOUND_ROWS productID, title 
-		FROM	products	
-		LIMIT	{$start}, {$perPage}";
+$sql = "SELECT * FROM products ORDER BY title";
+
+
+/*$sql = "SELECT  SQL_CALC_FOUND_ROWS productID, title 
+		FROM	products
+		ORDER BY title
+		LIMIT	{$start}, {$perPage}";*/
+
 
 $result = $conn->query($sql);
+
 //$pages = ceil($result/$perPage);
 /*if($result->num_rows > 0){
 $result->fetch_assoc();
@@ -45,7 +51,7 @@ else{
 
 <!DOCTYPE html>
 <html lang="en">
-<?php 
+<?php
 include 'includes/head.php';
 include 'includes/header.php';
 ?>
@@ -80,7 +86,7 @@ include 'includes/header.php';
 				
 								echo '<table class="table table-striped">';
 								echo '<tr>';
-								echo "<td><a href=/displayItem.php?productID=" . $results['productID'] . '>' . $results['productID'] . ": "  . $results['title'] .  "</a></td>";
+								echo "<td><a href=/displayItem.php?productID=" . $results['productID'] . '>' . $results['title'] .  "</a></td>";
 								echo '</tr>';
 								
 								echo '</table>';
@@ -95,6 +101,27 @@ include 'includes/header.php';
 				</div>
 			</div>	
 		</div>
+	<!----pagination page navigation bar--->
+	<!---<nav>
+ <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li><a href="index.php">1</a></li>
+    <li><a href='index.php/'. $page . =2'>2</a></li>
+    <li><a href="index.php/page=3">3</a></li>
+    <li><a href="index.php/page=4">4</a></li>
+    <li><a href="index.php/page=5">5</a></li>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>--->
 	</div>
+
 </div>
 <?php include 'includes/footer.php';?>

@@ -49,18 +49,20 @@ include 'includes/header.php';
 						while($row = $result->fetch_assoc()) {
 							
 							// related items will be related.php variable is rel
+							echo"<div class='row'><center>";
+							echo"<div class='box-icon'>";
+							echo"<img class='img-responsive' alt='Brand' src='" . $row["imagePath"] . "'> ";
+							echo"</center></div>";
+							echo"</div>";
 							echo"<div class='row'>";
 							echo"<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3'>";
 							echo"<div class='box'>";
-							echo"<div class='box-icon'>";
-							echo"<img class='img-responsive' alt='Brand' src='" . $row["imagePath"] . "' width='100px'> ";
-							echo"</div>";
 							echo"<div class='info'>";
 							echo"<h4 class='text-center'>" . $row["title"] . "</h4>";
-							echo"<h6 class='text-center'>" . $row["price"] . "</h6>";
+							echo"<h6 class='text-center'>$" . $row["price"] . "</h6>";
 							echo"<h6 class='text-center'>" . $row["shortDesc"] . "</h6>";
 							echo"<p>" . $row["longDesc"] . "</p>";
-							echo"<a class='btn btn-small btn-success' href='related.php?rel=$itemTag'>Related Items <span class='glyphicon glyphicon-search' aria-hidden='true'></span></a>";
+							echo"<a class='btn btn-small btn-success' href=/related.php?rel='"  . urlencode($row["itemTag"]) .  "'> Related Items  <span class='glyphicon glyphicon-search' aria-hidden='true'></span></a>";
 							echo"</div></div></div>";
 						}	
 					} 

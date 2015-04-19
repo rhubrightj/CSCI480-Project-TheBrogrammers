@@ -58,7 +58,7 @@ include 'includes/phpqrcode/qrlib.php';
 	
 	if (mysqli_query($conn, $sql)){
 		// SQL query executed successfully.
-		echo "<p>New record created successfully</p>";
+		echo "<center><p>New record created successfully</p></center>";
 	} 
 	else {
 		// SQL query fail.
@@ -86,7 +86,9 @@ include 'includes/phpqrcode/qrlib.php';
 		if ($uploadOk == 1) {
 			// generate a QR code for this products.
 			QRcode::png("http://www.objectsofdesirefindlay.com/displayItem.php?productID=" . $productID, $QRCodePath, "H", 4, 4);
-			echo "<p><img class='img-responsive' alt='Brand' src='$QRCodePath' width='100px'></p>";
+			echo "<div class='row'>";
+			echo "<center><img class='img-responsive' alt='Brand' src='$QRCodePath' width='200px'></center>";
+			echo "</div>";
 		}
 		else {
 			echo "<p>Cannot create QR code because there was an error adding the product.</p>";
@@ -153,7 +155,7 @@ include 'includes/phpqrcode/qrlib.php';
 	}
 	?>
 	
-	<a class="btn btn-default pull-left navbar-btn" href="add.php">Add Another Item</a>
+	<center><a class="btn btn-success navbar-btn" href="add.php">Add Another Item</a></center>
 	
 </div>
 

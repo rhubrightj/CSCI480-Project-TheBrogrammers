@@ -144,6 +144,8 @@ include 'includes/header.php';
 			
 			
 			//------------------- Redisplay all the products with the update info ---------------------
+			include('modalScript.php');
+			
 			$query = "SELECT * FROM products";
 			
 			//$eventRecords = mysql_query($query);
@@ -152,10 +154,8 @@ include 'includes/header.php';
 			<div class="table-responsive">
 				<table class="table table-striped">
 					<tr>
-					<th>Product Id</th>
 					<th>Title</th>
-					<th>Price</th>
-					<th>Short Description</th>
+					<th>Details</th>
 					<th>Edit</th>
 					</tr>
 				
@@ -164,10 +164,17 @@ include 'includes/header.php';
 							while($productArray = $productRecords->fetch_assoc()){
 								
 								echo "<tr>";
-								echo "<td>".$productArray['productID']."</td>";
 								echo "<td>".$productArray['title']."</td>";
-								echo "<td>".$productArray['price']."</td>";
-								echo "<td>".$productArray['shortDesc']."</td>";
+								/*echo "<td>".$productArray['price']."</td>";
+								echo "<td>".$productArray['productID']."</td>";
+								echo "<td>".$productArray['shortDesc']."</td>";*/
+								
+								
+								echo "<td><center><a href='#' class='btn btn-info edit-record' data-toggle='modal' data-target='#myModal' data-id=".$productArray['productID']."><span class='glyphicon glyphicon-info-sign' aria-hidden='true'></span></a></center></td>";
+								
+								
+								
+								
 								echo "<td><a class='btn btn-warning btn-xs' href='updateForm.php?edit=$productArray[productID]'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></a></td>";
 								
 								echo "</tr>";
@@ -179,6 +186,8 @@ include 'includes/header.php';
 					?>
 				</table>
 			</div>
+			<!----------------modal pop up with details------------------->
+			<?php include('detailModal.php'); ?>
 		</div>
 	</div>
 </div>

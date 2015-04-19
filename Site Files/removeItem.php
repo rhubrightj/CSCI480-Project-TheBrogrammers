@@ -58,7 +58,7 @@ include 'includes/header.php';
 							echo"</div>";
 							echo"<div class='info'>";
 							echo"<h4 class='text-center'>" . $row["title"] . "</h4>";
-							echo"<h6 class='text-center'>" . $row["price"] . "</h6>";
+							echo"<h6 class='text-center'>$" . $row["price"] . "</h6>";
 							echo"<h6 class='text-center'>" . $row["shortDesc"] . "</h6>";
 							echo"<p>" . $row["longDesc"] . "</p>";
 							echo"<a class='btn btn-small btn-danger' href='delete.php?del=$productID'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
