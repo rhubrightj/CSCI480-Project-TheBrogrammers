@@ -15,7 +15,7 @@ include 'includes/header.php';
 					<img class="img-responsive" alt="Brand" src="./images/logo.jpg" width="100px">
 				</a>
 			</div>
-			<a class="btn btn-default pull-right navbar-btn" href="./index.php">View All Items</a>
+			<a class="btn btn-default pull-right navbar-btn" href="./index.php">Home</a>
 		</div>
 	</nav>
 	<div id="main">
@@ -62,7 +62,7 @@ include 'includes/header.php';
 							echo"<h6 class='text-center'>$" . $row["price"] . "</h6>";
 							echo"<h6 class='text-center'>" . $row["shortDesc"] . "</h6>";
 							echo"<p>" . $row["longDesc"] . "</p>";
-							echo"<a class='btn btn-small btn-success' href=/related.php?rel='"  . urlencode($row["itemTag"]) .  "'> Related Items  <span class='glyphicon glyphicon-search' aria-hidden='true'></span></a>";
+							echo"<a class='btn btn-small btn-success' href=/related.php?rel='"  . urlencode($row["itemTag"]) . "'&productID=" . urlencode($row['productID']) . "> Related Items  <span class='glyphicon glyphicon-search' aria-hidden='true'></span></a>";
 							echo"</div></div></div>";
 						}	
 					} 

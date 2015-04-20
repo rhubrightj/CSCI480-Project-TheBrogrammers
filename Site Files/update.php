@@ -146,7 +146,7 @@ include 'includes/header.php';
 			//------------------- Redisplay all the products with the update info ---------------------
 			include('modalScript.php');
 			
-			$query = "SELECT * FROM products";
+			$query = "SELECT * FROM products ORDER BY title";
 			
 			//$eventRecords = mysql_query($query);
 			?>    

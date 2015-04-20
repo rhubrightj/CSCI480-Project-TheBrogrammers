@@ -14,23 +14,25 @@ $perPage	= 	isset($_GET['per-page']) && $_GET['per-page'] <= 100 ? (int)$_GET['p
 //Positioning
 $start = ($page > 1) ? ($page * $perPage) - $perPage : 0;
 
-$itemTag   = $_GET['rel'];
-$productID = $_GET['productID'];
+$itemTag    = $_GET['rel'];
+$prevProdID = $_GET['productID'];
+$noRelated  = FALSE;
 
-
-
-if($_GET['rel'] == ""){
-	$result = "Sorry there are no related items for this product, please select another product!";
-	
-		
+if($itemTag == "''"){
+	// No related items to this product.
+	$noRelated = TRUE;
 }
 else{
-//Query
-$sql = 'SELECT  *
-		FROM	products	
-		WHERE	itemTag = ' . $_GET['rel'] . ' ';
-
-$result = mysqli_query($conn, $sql);
+	//Query
+	$sql = "SELECT  *
+			FROM	products	
+			WHERE	itemTag = $itemTag
+					AND productID <> $prevProdID";
+	$result = mysqli_query($conn, $sql);
+	if (mysqli_num_rows($result) == 0){
+		// Contains a tag name, but no other items contain the same tag name.
+		$noRelated = TRUE;
+	}
 }
 
 
@@ -55,7 +57,8 @@ include 'includes/header.php';
 					<img class="img-responsive" alt="Brand" src="./images/logo.jpg" width="100px">
 				</a>
 			</div>
-			<a class="btn btn-default pull-left navbar-btn" href="./index.php">Home</a>
+			<?php echo "<a class='btn btn-default pull-left navbar-btn' href='./displayItem.php?productID=$prevProdID'>Back</a>" ?>
+			<a class="btn btn-default pull-right navbar-btn" href="./index.php">Home</a>
 			<!-- button position -->
 		</div>
 	</nav>
@@ -69,7 +72,10 @@ include 'includes/header.php';
 			<div class="row">
 				<div class="col-xs-12" style="margin-bottom:10px">
 					
-					<?php foreach($result as $results): ?>
+					<?php
+					if (!$noRelated){					
+						foreach($result as $results): 
+					?>
 					<div class="result">
 						<form class="form-inline" action="displayItem.php" method="GET" enctype="multipart/form-data" id="displayItem"/>
 							<div class="table-responsive">
@@ -77,7 +83,7 @@ include 'includes/header.php';
 				
 								echo '<table class="table table-striped">';
 								echo '<tr>';
-								echo "<td><a href=/displayItem.php?productID=" . $results['productID'] . '>' . $results['productID'] . ": "  . $results['title'] .  "</a></td>";
+								echo "<td><a href=/displayItem.php?productID=" . $results['productID'] . '>'. $results['title'] .  "</a></td>";
 								echo '</tr>';
 								
 								echo '</table>';
@@ -85,7 +91,13 @@ include 'includes/header.php';
 							</div>
 						</form>
 					</div>
-					<?php endforeach; ?>
+					<?php 
+						endforeach;
+					} // End $noRelated if statement.
+					else {
+						echo "<p>This item has no related items.</p>";
+					}
+					?>
 				</div>
 				<div class="col-xs-4" style="margin-bottom:10px">
 					

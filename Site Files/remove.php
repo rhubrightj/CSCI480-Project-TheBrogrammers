@@ -16,9 +16,10 @@ $perPage	= 	isset($_GET['per-page']) && $_GET['per-page'] <= 100 ? (int)$_GET['p
 $start = ($page > 1) ? ($page * $perPage) - $perPage : 0;
 
 //Query
-$sql = "SELECT  SQL_CALC_FOUND_ROWS productID, title 
-		FROM	products	
-		LIMIT	{$start}, {$perPage}";
+$sql = "SELECT  	SQL_CALC_FOUND_ROWS productID, title 
+		FROM		products
+		ORDER BY	title
+		LIMIT		{$start}, {$perPage}";
 
 $result = $conn->query($sql);
 //$pages = ceil($result/$perPage);
@@ -82,7 +83,7 @@ include 'includes/header.php';
 				
 								echo '<table class="table table-striped">';
 								echo '<tr>';
-								echo "<td><a href=/removeItem.php?productID=" . $results['productID'] . '>' . $results['productID'] . ": "  . $results['title'] .  "</a></td>";
+								echo "<td><a href=/removeItem.php?productID=" . $results['productID'] . '>' . $results['title'] .  "</a></td>";
 								echo"<td><a class='btn btn-small btn-danger pull-right' href='delete.php?del=$results[productID]'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>";
 								echo '</tr>';
 								
