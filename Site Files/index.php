@@ -65,7 +65,7 @@ include 'includes/header.php';
 					<img class="img-responsive" alt="Brand" src="./images/logo.jpg" width="100px">
 				</a>
 			</div>
-			<a class='btn btn-small btn-default pull-right' href='loginPage.php'>Admin</a>
+			<a class='btn btn-small btn-default pull-right' href='loginPage.php'>Log In</a>
 		</div>
 	</nav>
 	
