@@ -49,9 +49,30 @@ include 'includes/header.php';
 						<div class="form-group">
 							<input style="margin:20px; margin-left:0px" type="file" name="fileToUpload" id="fileToUpload">
 						</div>
+						
 						<div class="form-group">
-							<label for="itemTag">Tag Name:</label><input class="form-control" type="text" id="itemTag" name="itemTag"/>
+						  <div class="row">
+							<div class="col-lg-6">
+								<label for="qr">Tag Name:</label>
+							  <div class="input-group">
+								
+								<input type="text" class="form-control" type="text" id="itemTag" name="itemTag" aria-label="...">
+								<div class="input-group-btn">
+								  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Tags <span class="caret"></span></button>
+								  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+								    <li><a href="#">Action</a></li>
+								    <li><a href="#">Another action</a></li>
+								    <li><a href="#">Something else here</a></li>
+								    <li class="divider"></li>
+								    <li><a href="#">Separated link</a></li>
+								  </ul>
+								</div><!-- /btn-group -->
+							  </div><!-- /input-group -->
+							</div><!-- /.col-lg-6 -->
+						  </div><!-- /.row -->
+							
 						</div>
+						
 						<div class="form-group">
 							<input class="btn btn-info pull-left" type="submit" value="Submit">
 						</div>

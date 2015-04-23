@@ -103,9 +103,18 @@ include 'includes/header.php';
 			</div>	
 		</div>
 	<nav>
+<div class="text-center">
  <ul class="pagination">
   <li>
-      <a href="#" aria-label="Previous">
+     <!---Functionality to navigate pages--->
+	<?php
+	$firstPage    = 1;
+	$currentPage   = (int)$_GET['page'] ;
+	$previousPage  = $currentPage - 1;
+	if($currentPage > $firstPage)
+
+	?>
+      <a href="?page=<?php echo $previousPage ?>" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
@@ -115,11 +124,18 @@ include 'includes/header.php';
    
 <?php endfor;?>
 <li>
-      <a href="#" aria-label="Next">
+     <!---Functionality to navigate pages--->
+	<?php
+	$currentPage = (int)$_GET['page'];
+	$nextPage    = $currentPage + 1;
+	if($currentPage < $x) ?>
+	
+      <a href="?page=<?php echo $nextPage ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
   </ul>
+</div>
 </nav>
 	</div>
 </div>

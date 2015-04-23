@@ -34,6 +34,14 @@ include 'includes/header.php';
 			
 			$conn = new mysqli($servername, $user, $password, $dbname) or die("Unable to connect to the database");
 
+			$page 		=	isset($_GET['page']) ? (int)$_GET['page'] : 1;
+			$perPage	= 	isset($_GET['per-page']) && $_GET['per-page'] <= 10 ? (int)$_GET['per-page'] : 5;
+
+			//Positioning
+			$start = ($page > 1) ? ($page * $perPage) - $perPage : 0;
+
+			
+			
 			
 			//-------------------- Populate variables from edit form --------------------
 			$productID  = $_POST['productID'];
@@ -63,10 +71,10 @@ include 'includes/header.php';
 			if ($imageName){
 				// New image selected, delete the old one first.
 				if($imagePath){
-					// If item did not contain an image then no 
-					// need to remove anything from server.
-					unlink($imagePath);
-				}
+-					// If item did not contain an image then no 
+-					// need to remove anything from server.
+-					unlink($imagePath);
+-				}
 				$newImage = 1;
 				$imagePath = "uploads/" . $imageName;
 			}
@@ -150,7 +158,18 @@ include 'includes/header.php';
 			//------------------- Redisplay all the products with the update info ---------------------
 			include('modalScript.php');
 			
-			$query = "SELECT * FROM products ORDER BY title";
+			//$query = "SELECT * FROM products ORDER BY title";
+			//Query
+			$sql = "SELECT  SQL_CALC_FOUND_ROWS productID, title 
+				FROM	products
+				ORDER BY title
+				LIMIT	{$start}, {$perPage}";
+
+
+			$result = $conn->query($sql);
+			$total = $conn->query("SELECT FOUND_ROWS() as total")->fetch_assoc()['total'];
+
+			$pages = ceil($total/$perPage);
 			
 			//$eventRecords = mysql_query($query);
 			?>    
@@ -164,7 +183,7 @@ include 'includes/header.php';
 					</tr>
 				
 					<?php
-						if ($productRecords = $conn->query($query)){
+						if ($productRecords = $conn->query($sql)){
 							while($productArray = $productRecords->fetch_assoc()){
 								
 								echo "<tr>";
@@ -193,6 +212,44 @@ include 'includes/header.php';
 			<!----------------modal pop up with details------------------->
 			<?php include('detailModal.php'); ?>
 		</div>
+		
+		<nav>
+	<div class="text-center">
+ <ul class="pagination">
+  <li>
+	<!---Functionality to navigate pages--->
+	
+	<?php
+	$firstPage    = 1;
+	$currentPage   = (int)$_GET['page'] ;
+	$previousPage  = $currentPage - 1;
+	if($currentPage > $firstPage)
+
+	?>
+      <a href="?page=<?php echo $previousPage ?>" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+ <?php for($x = 1; $x <= $pages; $x++): ?>
+   
+    <li><a href="?page=<?php echo $x?>&per-page=<?php echo $perPage; ?>"><?php echo $x?></a></li>
+   
+<?php endfor;?>
+<li>
+	
+	<?php
+	$currentPage = (int)$_GET['page'];
+	$nextPage    = $currentPage + 1;
+	if($currentPage < $x) ?>
+	
+      <a href="?page=<?php echo $nextPage ?>" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+ </div>
+</nav>
+
 	</div>
 </div>
 
