@@ -66,7 +66,6 @@ include 'includes/header.php';
 												<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
 												<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
 												<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-												<li role="presentation" class="divider"></li>
 												<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
 											</ul>
 										</div><!-- /btn-group -->
@@ -99,6 +98,9 @@ include 'includes/header.php';
 			</div>	
 		</div>
 	</div>
+<script src="jquery/jquery.js"></script>
+<script type="text/javascript" src='js/bootstrap.min.js'></script>
+<link rel="stylesheet" href="css/bootstrap.css" />
 </div>
 
 <?php include 'includes/footer.php';?>

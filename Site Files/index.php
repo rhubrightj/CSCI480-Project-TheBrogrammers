@@ -112,12 +112,16 @@ include 'includes/header.php';
 	$firstPage    = 1;
 	$currentPage   = (int)$_GET['page'] ;
 	$previousPage  = $currentPage - 1;
-	if($currentPage > $firstPage)
+	if($currentPage > $firstPage):
 
 	?>
       <a href="?page=<?php echo $previousPage ?>" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
+      <?php else: ?>
+      <span class="disabled" aria-hidden="true">&laquo;</span>
+      <?php endif; ?>
+      
     </li>
  <?php for($x = 1; $x <= $pages; $x++): ?>
    
@@ -129,11 +133,15 @@ include 'includes/header.php';
 	<?php
 	$currentPage = (int)$_GET['page'];
 	$nextPage    = $currentPage + 1;
-	if($currentPage < $x) ?>
+	if($currentPage < $x - 1): ?>
 	
       <a href="?page=<?php echo $nextPage ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
+      <?php else: ?>
+      <span class="disabled" aria-hidden="true">&raquo;</span>
+      <?php endif; ?>
+      
     </li>
   </ul>
  </div>
