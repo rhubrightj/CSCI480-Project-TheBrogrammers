@@ -70,11 +70,11 @@ include 'includes/header.php';
 			// Check if a new image was selected.
 			if ($imageName){
 				// New image selected, delete the old one first.
-				if($imagePath){
--					// If item did not contain an image then no 
--					// need to remove anything from server.
--					unlink($imagePath);
--				}
+				if ($imagePath){
+					// If item did not contain an image then no 
+					// need to remove anything from server.
+					unlink($imagePath);
+				}
 				$newImage = 1;
 				$imagePath = "uploads/" . $imageName;
 			}

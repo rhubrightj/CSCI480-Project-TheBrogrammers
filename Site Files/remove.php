@@ -84,13 +84,13 @@ include 'includes/header.php';
 							<div class="table-responsive">
 								<?php 
 				
-								echo '<table class="table table-striped">';
-								echo '<tr>';
-								echo "<td><a href=/removeItem.php?productID=" . $results['productID'] . '>' . $results['productID'] . ": "  . $results['title'] .  "</a></td>";
-								echo"<td><a class='btn btn-small btn-danger pull-right' href='delete.php?del=$results[productID]'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>";
-								echo '</tr>';
+								echo "<table class='table table-striped'>";
+								echo "<tr>";
+								echo "<td><a href=/removeItem.php?productID=" . $results['productID'] . '>' . $results['title'] .  "</a></td>";
+								echo "<td><a class='btn btn-small btn-danger pull-right' onclick='return confirm('Remove this item?')' href='delete.php?del=$results[productID]'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>";
+								echo "</tr>";
 								
-								echo '</table>';
+								echo "</table>";
 								?> 
 							</div>
 						</form>

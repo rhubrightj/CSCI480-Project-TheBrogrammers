@@ -63,7 +63,7 @@ include 'includes/header.php';
 							echo"<h6 class='text-center'>$" . $row["price"] . "</h6>";
 							echo"<h6 class='text-center'>" . $row["shortDesc"] . "</h6>";
 							echo"<p>" . $row["longDesc"] . "</p>";
-							echo"<a class='btn btn-small btn-danger' href='delete.php?del=$productID'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
+							echo"<a class='btn btn-small btn-danger' onclick='return confirm('Remove this item?')' href='delete.php?del=$productID'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
 							echo"</div></div></div>";
 						}	
 					} 
