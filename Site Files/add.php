@@ -51,29 +51,29 @@ include 'includes/header.php';
 						</div>
 						
 						<div class="form-group">
-						  <div class="row">
-							<div class="col-lg-6">
-								<label for="qr">Tag Name:</label>
-							  <div class="input-group">
+							<div class="row">
+								<div class="col-lg-6">
+									<label for="qr">Tag Name:</label>
+									<div class="input-group">
 								
-								<input type="text" class="form-control" type="text" id="itemTag" name="itemTag" aria-label="...">
-								<div class="input-group-btn">
-									<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-expanded="true">
-										Tags
-										<span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu" role="menu"> <!--dropdown-menu-right-->
-										<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-										<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-										<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-										<li role="presentation" class="divider"></li>
-										<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-									</ul>
-								</div><!-- /btn-group -->
-							  </div><!-- /input-group -->
-							</div><!-- /.col-lg-6 -->
-						  </div><!-- /.row -->
-						</div>
+										<input type="text" class="form-control" type="text" id="itemTag" name="itemTag" aria-label="...">
+										<div class="input-group-btn">
+											<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-expanded="true">
+												Tags
+												<span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu" role="menu"> <!--dropdown-menu-right-->
+												<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+												<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+												<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+												<li role="presentation" class="divider"></li>
+												<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+											</ul>
+										</div><!-- /btn-group -->
+									</div><!-- /input-group -->
+								</div><!-- /.col-lg-6 -->
+							</div><!-- /.row -->
+						</div><!--form-group-->
 						
 						<!--
 						<div class="dropdown">
