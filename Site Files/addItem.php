@@ -17,6 +17,15 @@ include 'includes/phpqrcode/qrlib.php';
 					<img class="img-responsive" alt="Brand" src="./images/logo.jpg" width="100px">
 				</a>
 			</div>
+			<?php
+			if ($_SESSION['username'])
+				echo "<p class='navbar-text'>Welcome, " .$_SESSION['username']. "!</p>";
+			else{
+				echo "<a class='btn btn-default pull-left navbar-btn' href='./index.php'>Home</a>";
+				echo "<a class='btn btn-default pull-right navbar-btn' href='./loginPage.php'>Log In</a>";
+				die ("You must be logged in!");
+			}
+			?>
 			<a class="btn btn-default pull-left navbar-btn" href="./dashboard.php">Dashboard</a>
 			<a class="btn btn-default pull-right navbar-btn" href="./logout.php">Log Out</a>
 		</div>
@@ -159,9 +168,11 @@ include 'includes/phpqrcode/qrlib.php';
 		}
 	}
 	?>
-	
-	<center><a class="btn btn-success navbar-btn" href="add.php">Add Another Item</a></center>
-	
+	<?php   
+		echo "<center><a class='btn btn-warning' style='margin:10px' href='./" . $QRCodePath . "' download='' ><span class='glyphicon glyphicon-qrcode' aria-hidden='true'></span> Download QR Code</a></center>";
+	?>
+
+	<center><a class="btn btn-success" style="margin:10px" href="add.php"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Another Item</a></center>
 </div>
 
 <?php include 'includes/footer.php';?>

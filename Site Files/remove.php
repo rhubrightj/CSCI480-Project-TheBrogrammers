@@ -64,6 +64,15 @@ include 'includes/header.php';
 					<img class="img-responsive" alt="Brand" src="./images/logo.jpg" width="100px">
 				</a>
 			</div>
+			<?php
+			if ($_SESSION['username'])
+				echo "<p class='navbar-text'>Welcome, " .$_SESSION['username']. "!</p>";
+			else{
+				echo "<a class='btn btn-default pull-left navbar-btn' href='./index.php'>Home</a>";
+				echo "<a class='btn btn-default pull-right navbar-btn' href='./loginPage.php'>Log In</a>";
+				die ("You must be logged in!");
+			}
+			?>
 			<a class="btn btn-default pull-left navbar-btn" href="./dashboard.php">Dashboard</a>
 			<a class="btn btn-default pull-right navbar-btn" href="./logout.php">Log Out</a>
 		</div>
@@ -81,18 +90,22 @@ include 'includes/header.php';
 					<?php foreach($result as $results): ?>
 					<div class="result">
 						<form class="form-inline" action="removeItem.php" method="GET" enctype="multipart/form-data" id="removeItem"/>
+				
 							<div class="table-responsive">
 								<?php 
 				
 								echo "<table class='table table-striped'>";
 								echo "<tr>";
 								echo "<td><a href=/removeItem.php?productID=" . $results['productID'] . '>' . $results['title'] .  "</a></td>";
-								echo "<td><a class='btn btn-small btn-danger pull-right' onclick='return confirm('Remove this item?')' href='delete.php?del=$results[productID]'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>";
+								echo "<td><a class='btn btn-small btn-danger pull-right' href='delete.php?del=$results[productID]'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a></td>";
 								echo "</tr>";
 								
 								echo "</table>";
-								?> 
+								
+								?>
+						
 							</div>
+							
 						</form>
 					</div>
 					<?php endforeach; ?>
@@ -100,7 +113,10 @@ include 'includes/header.php';
 				<div class="col-xs-4" style="margin-bottom:10px">
 					
 				</div>
-			</div>	
+			</div>
+				
+			
+		
 		</div>
 	<nav>
 <div class="text-center">

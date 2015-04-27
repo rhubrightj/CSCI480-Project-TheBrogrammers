@@ -9,7 +9,7 @@ $conn = new mysqli($servername, $user, $password, $dbname) or die("Unable to con
 	
 
 $page 		=	isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$perPage	= 	isset($_GET['per-page']) && $_GET['per-page'] <= 10 ? (int)$_GET['per-page'] : 5;
+$perPage	= 	isset($_GET['per-page']) && $_GET['per-page'] <= 10 ? (int)$_GET['per-page'] : 9;
 
 //Positioning
 $start = ($page > 1) ? ($page * $perPage) - $perPage : 0;
@@ -18,7 +18,7 @@ $start = ($page > 1) ? ($page * $perPage) - $perPage : 0;
 //$sql = "SELECT * FROM products ORDER BY title";
 
 
-$sql = "SELECT  SQL_CALC_FOUND_ROWS productID, title 
+$sql = "SELECT  SQL_CALC_FOUND_ROWS *
 		FROM	products
 		ORDER BY title
 		LIMIT	{$start}, {$perPage}";
@@ -73,35 +73,39 @@ include 'includes/header.php';
 	<div id="main">
 		<div class="container">
 			
-			<h2>Welcome</h2>
+			<h3>Welcome to our shop!</h3>
+			<div class="jumbotron">
+				<p style="font-size:16px"> 
+					Use a QR code scanner on your phone to scan the items and learn more about them.  If you don't have a phone or don't have a QR scanner installed, see us at the register.  We will kindly provide you with an iPod with a scanner installed.  Happy shopping!
+				</p>
+			</div>
 			
 			<!-- product info form -->
 			<div class="row">
-				<div class="col-xs-12" style="margin-bottom:10px">
+				<!--<div class="col-xs-12" style="margin-bottom:10px">-->
 					
 					<?php foreach($result as $results): ?>
 					<div class="result">
 						<form class="form-inline" action="displayItem.php" method="GET" enctype="multipart/form-data" id="displayItem"/>
-							<div class="table-responsive">
-								<?php 
-				
-								echo '<table class="table table-striped">';
-								echo '<tr>';
-								echo "<td><a href=/displayItem.php?productID=" . $results['productID'] . '>' . $results['title'] .  "</a></td>";
-								echo '</tr>';
-								
-								echo '</table>';
-								?> 
+							<!--<div class="table">-->
+							<div class="col-xs-12 col-sm-6 col-md-4">
+								<div class="row">
+									<div class="col-sm-12">
+										<?php echo "<td><center><img style='margin-top:20px' class='img-responsive' alt='Brand' style='max-height: 250px' src='" . $results['imagePath'] . "'></center></td>";?>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<?php echo "<td><center><a href=/displayItem.php?productID=" . $results['productID'] . '>' . $results['title'] .  "</a></center></td>";?>
+									</div>	
+								</div>
 							</div>
 						</form>
 					</div>
 					<?php endforeach; ?>
 				</div>
-				<div class="col-xs-4" style="margin-bottom:10px">
-					
-				</div>
 			</div>	
-		</div>
+		
 	<!----pagination page navigation bar--->
 	<nav>
 	<div class="text-center">

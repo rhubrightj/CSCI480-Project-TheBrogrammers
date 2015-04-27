@@ -17,6 +17,15 @@ include 'includes/header.php';
 					<img class="img-responsive" alt="Brand" src="./images/logo.jpg" width="100px">
 				</a>
 			</div>
+			<?php
+			if ($_SESSION['username'])
+				echo "<p class='navbar-text'>Welcome, " .$_SESSION['username']. "!</p>";
+			else{
+				echo "<a class='btn btn-default pull-left navbar-btn' href='./index.php'>Home</a>";
+				echo "<a class='btn btn-default pull-right navbar-btn' href='./loginPage.php'>Log In</a>";
+				die ("You must be logged in!");
+			}
+			?>
 			<a class="btn btn-default pull-left navbar-btn" href="./dashboard.php">Dashboard</a>
 			<a class="btn btn-default pull-right navbar-btn" href="./logout.php">Log Out</a>
 		</div>

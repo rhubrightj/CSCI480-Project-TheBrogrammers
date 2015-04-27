@@ -3,6 +3,7 @@ session_start();
 include 'includes/head.php';
 include 'includes/header.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +16,15 @@ include 'includes/header.php';
 					<img class="img-responsive" alt="Brand" src="./images/logo.jpg" width="100px">
 				</a>
 			</div>
+			<?php
+				if ($_SESSION['username'])
+					echo "<p class='navbar-text'>Welcome, " .$_SESSION['username']. "!</p>";
+				else{
+					echo "<a class='btn btn-default pull-left navbar-btn' href='./index.php'>Home</a>";
+					echo "<a class='btn btn-default pull-right navbar-btn' href='./loginPage.php'>Log In</a>";
+					die ("You must be logged in!");
+				}
+			?>
 			<a class="btn btn-default pull-left navbar-btn" href="./dashboard.php">Dashboard</a>
 			<a class="btn btn-default pull-right navbar-btn" href="./logout.php">Log Out</a>
 		</div>
@@ -218,17 +228,19 @@ include 'includes/header.php';
  <ul class="pagination">
   <li>
 	<!---Functionality to navigate pages--->
-	
 	<?php
 	$firstPage    = 1;
 	$currentPage   = (int)$_GET['page'] ;
 	$previousPage  = $currentPage - 1;
-	if($currentPage > $firstPage)
+	if($currentPage > $firstPage):
 
 	?>
       <a href="?page=<?php echo $previousPage ?>" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
+      <?php else: ?>
+      <span class="disabled" aria-hidden="true">&laquo;</span>
+      <?php endif; ?>
     </li>
  <?php for($x = 1; $x <= $pages; $x++): ?>
    
@@ -236,15 +248,18 @@ include 'includes/header.php';
    
 <?php endfor;?>
 <li>
-	
+	<!---Functionality to navigate pages--->
 	<?php
 	$currentPage = (int)$_GET['page'];
 	$nextPage    = $currentPage + 1;
-	if($currentPage < $x) ?>
+	if($currentPage < $x - 1): ?>
 	
       <a href="?page=<?php echo $nextPage ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
+      <?php else: ?>
+      <span class="disabled" aria-hidden="true">&raquo;</span>
+      <?php endif; ?>
     </li>
   </ul>
  </div>
