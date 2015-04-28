@@ -18,7 +18,7 @@ include 'includes/header.php';
 						<input type="text" name="username" class="form-control" placeholder="Login" required autofocus>
 						<input type="password" name="password" class="form-control" placeholder="Password" required>
 						<button class="btn btn-lg btn-primary btn-block" type="submit" value="Log in">Sign in</button>
-						<a href="index.php" class="btn btn-primary btn-lg btn-block btn-block">Home Page</a>
+						<a href="index.php?page=1" class="btn btn-primary btn-lg btn-block btn-block">Home Page</a>
 						<!--<label class="checkbox pull-left"> 
 							<input type="checkbox" value="remember-me">
 							Remember me

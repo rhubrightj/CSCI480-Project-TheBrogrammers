@@ -9,7 +9,7 @@ $conn = new mysqli($servername, $user, $password, $dbname) or die("Unable to con
 	
 
 $page 		=	isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$perPage	= 	isset($_GET['per-page']) && $_GET['per-page'] <= 100 ? (int)$_GET['per-page'] : 10;
+$perPage	= 	isset($_GET['per-page']) && $_GET['per-page'] <= 10 ? (int)$_GET['per-page'] : 10;
 
 //Positioning
 $start = ($page > 1) ? ($page * $perPage) - $perPage : 0;
@@ -24,17 +24,20 @@ if($itemTag == "''"){
 }
 else{
 	//Query
-	$sql = "SELECT  *
+	$sql = "SELECT  SQL_CALC_FOUND_ROWS *
 			FROM	products	
 			WHERE	itemTag = $itemTag
-					AND productID <> $prevProdID";
+					AND productID <> $prevProdID
+			LIMIT	{$start}, {$perPage}";
 	$result = mysqli_query($conn, $sql);
 	if (mysqli_num_rows($result) == 0){
 		// Contains a tag name, but no other items contain the same tag name.
 		$noRelated = TRUE;
 	}
 }
+$total = $conn->query("SELECT FOUND_ROWS() as total")->fetch_assoc()['total'];
 
+$pages = ceil($total/$perPage);
 
 
 
@@ -53,12 +56,12 @@ include 'includes/header.php';
 	<nav class="navbar navbar-default">
 		<div class="container">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">
+				<a class="navbar-brand" href="index.php?page=1">
 					<img class="img-responsive" alt="Brand" src="./images/logo.jpg" width="100px">
 				</a>
 			</div>
 			<?php echo "<a class='btn btn-default pull-left navbar-btn' href='./displayItem.php?productID=$prevProdID'>Back</a>" ?>
-			<a class="btn btn-default pull-right navbar-btn" href="./index.php">Home</a>
+			<a class="btn btn-default pull-right navbar-btn" href="./index.php?page=1">Home</a>
 			<!-- button position -->
 		</div>
 	</nav>
@@ -104,6 +107,8 @@ include 'includes/header.php';
 				</div>
 			</div>	
 		</div>
+			
+	
 	</div>
 </div>
 <?php include 'includes/footer.php';?>

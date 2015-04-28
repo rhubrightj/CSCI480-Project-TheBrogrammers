@@ -11,11 +11,11 @@ include 'includes/header.php';
 	<nav class="navbar navbar-default">
 		<div class="container">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">
-					<img class="img-responsive" alt="Brand" src="./images/logo.jpg" width="100px">
+				<a class="navbar-brand" href="index.php?page=1">
+					<img class="img-responsive"  alt="Brand" src="./images/logo.jpg" width="100px" >
 				</a>
 			</div>
-			<a class="btn btn-default pull-right navbar-btn" href="./index.php">Home</a>
+			<a class="btn btn-default pull-right navbar-btn" href="./index.php?page=1">Home</a>
 		</div>
 	</nav>
 	<div id="main">

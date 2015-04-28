@@ -128,14 +128,14 @@ include 'includes/header.php';
     </li>
  <?php for($x = 1; $x <= $pages; $x++): ?>
    
-    <li><a href="?page=<?php echo $x?>&per-page=<?php echo $perPage; ?>"><?php echo $x?></a></li>
+    <li<?php if($page === $x):?> class="active"<?php endif;?>><a href="?page=<?php echo $x?>&per-page=<?php echo $perPage; ?>"><?php echo $x?></a></li>
    
 <?php endfor;?>
 <li>
 	<!---Functionality to navigate pages--->
 	<?php
 	$currentPage = (int)$_GET['page'];
-	$nextPage    = $currentPage + 1;
+	$nextPage    = $page + 1;
 	if($currentPage < $x - 1): ?>
 	
       <a href="?page=<?php echo $nextPage ?>" aria-label="Next">
